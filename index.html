@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Frog Pressing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loader">
+
+            <div class="spinner"></div>
+            <p>LOADING GAME ASSETS...</p>
+        </div>
+    </div>
+
+    <!-- VIDEO LAYER -->
+    <div id="video-layer">
+        <!-- Video 3: Game Loop (Bottom) -->
+        <video id="vid-game" class="fullscreen-video" loop playsinline muted>
+            <source src="bgv3.mp4" type="video/mp4">
+        </video>
+
+        <!-- Video 2: Manual Play (Middle) -->
+        <video id="vid-manual" class="fullscreen-video" playsinline>
+            <source src="bgv2.mp4" type="video/mp4">
+        </video>
+
+        <!-- Video 1: Intro (Top) - Responsive -->
+        <video id="vid-intro" class="fullscreen-video" playsinline>
+            <!-- Portrait version will be set by JavaScript -->
+        </video>
+
+
+        <!-- Static Background (Topmost initially) -->
+        <div id="bg-static" class="fullscreen-video active" style="z-index: 4;"></div>
+    </div>
+
+    <!-- PLAY OVERLAY (For Video 2) -->
+    <div id="play-overlay" class="hidden">
+        <h2 class="overlay-text">Hop In 🐸</h2>
+        <button id="big-play-btn">▶</button>
+    </div>
+
+    <!-- GAME UI LAYER (Initially Hidden) -->
+    <div id="game-ui-layer" class="fade-hidden">
+        <div id="game-container">
+            <!-- Background Ambient Layer (Optional, maybe remove if video is enough, but keeping for fireflies) -->
+            <div id="ambient-layer">
+                <!-- Fireflies will be injected here -->
+            </div>
+
+            <!-- Header -->
+            <div class="header">
+                <div class="score-box">SCORE: <span id="score">0</span></div>
+                <div class="score-box">BEST: <span id="high-score">0</span></div>
+                <button id="theme-toggle" class="theme-btn">☀️</button>
+            </div>
+            <!-- ADD THIS NEW FOOTER HERE -->
+            <div id="game-footer">
+                <a href="https://gmgn.ai/sol/token/7P8RM8hpQttAzC4an8CaYHko1njts73P1mawgbW3pump?ref=mrxtrader"
+                    target="_blank" rel="noopener noreferrer" class="footer-ca-link">
+                    CA: 7P8RM8hpQttAzC4an8CaYHko1njts73P1mawgbW3pump
+                </a>
+            </div>
+
+            <!-- Timer Ring Layer -->
+            <div id="timer-container"></div>
+
+            <!-- Game Content Layer -->
+            <div id="content-layer">
+                <div id="start-screen" class="screen active">
+                    <div class="frog-wrapper large">
+                        <div class="frog" id="title-frog">
+                            <div class="body"></div>
+                            <div class="eye left">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="eye right">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="mouth"></div>
+                            <div class="blush left"></div>
+                            <div class="blush right"></div>
+                        </div>
+                    </div>
+                    <h1 class="glow-text">FROG PRESS</h1>
+                    <p class="sub-text">Hop In 🐸</p>
+                    <p class="blink">TAP TO START</p>
+
+                </div>
+
+                <div id="game-screen" class="screen">
+                    <div class="frog-wrapper small">
+                        <div class="frog" id="game-frog">
+                            <div class="body"></div>
+                            <div class="eye left">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="eye right">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                    <div id="challenge-container">
+                        <h2 id="challenge-text">PRESS 5 TIMES</h2>
+                        <button id="press-counter">0 PRESSES</button>
+                    </div>
+                </div>
+
+                <div id="game-over-screen" class="screen">
+                    <div class="frog-wrapper">
+                        <div class="frog sad" id="dead-frog">
+                            <div class="body"></div>
+                            <div class="eye left">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="eye right">
+                                <div class="pupil"></div>
+                            </div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                    <h1 class="red-glow">GAME OVER</h1>
+                    <p>FINAL SCORE: <span id="final-score">0</span></p>
+                    <button id="restart-btn">PLAY AGAIN</button>
+                </div>
+
+                <div id="share-screen" class="screen">
+                    <div style="width: 100%; max-width: 350px;">
+
+                        <!-- Screenshot Preview Card -->
+                        <div id="screenshot-preview" style="
+            background: rgba(0, 20, 0, 0.9);
+            border: 2px solid var(--primary-green);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        ">
+                            <div><img class="score-img" src="frog styling.png"></img></div>
+                            <h2 class="red-glow"
+                                style="color: var(--warning-red); font-size: 28px; margin: 0 0 10px 0;">GAME OVER</h2>
+                            <p style="color: var(--frog-belly); font-size: 14px; margin: 5px 0;">FINAL SCORE</p>
+                            <p id="preview-score" style="
+                color: var(--primary-green);
+                font-size: 56px;
+                font-weight: bold;
+                margin: 10px 0;
+                text-shadow: 0 0 15px var(--primary-green);
+            ">0</p>
+                            <p id="preview-best1" style="color: var(--frog-belly); font-size: 12px; margin: 10px 0;">
+                                Best: <span id="preview-best">0</span></p>
+                            <p style="color: var(--primary-green); font-size: 12px; margin-top: 15px;">Can you beat
+                                this? 🎮</p>
+                        </div>
+
+                        <!-- Download Button -->
+                        <button id="download-btn" style="
+            width: 100%;
+            background: var(--primary-green);
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            box-shadow: 0 0 20px var(--primary-green);
+            transition: all 0.3s ease;
+        ">
+                            📥 DOWNLOAD IMAGE
+                        </button>
+
+                        <!-- Share Buttons -->
+                        <div style="
+            margin-bottom: 8px;
+        ">
+                            <button id="share-twitter" style="
+                display: inline;
+                width: 100%;
+                background: #1DA1F2;
+                color: white;
+                border: none;
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            ">
+                                Share on 𝕏
+                            </button>
+                        </div>
+
+                        <!-- Play Again Button -->
+                        <button id="share-play-again" style="
+            width: 100%;
+            background: #ffffff ;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        ">
+                            PLAY AGAIN
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Touch Feedback Layer -->
+            <div id="touch-layer"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
