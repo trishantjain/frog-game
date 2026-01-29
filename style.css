@@ -854,7 +854,7 @@ button#restart-btn {
 }
 
 /* Responsive adjustments for share screen */
-@media (max-width: 400px) {
+@media (max-width: 950px) {
   #screenshot-preview {
     padding: 20px;
   }
@@ -1008,136 +1008,7 @@ button#restart-btn {
    LANDSCAPE MODE - BALANCED FIX
    ======================================== */
 @media (orientation: landscape) {
-    /* Timer ring - moderate reduction */
-    #timer-container {
-        width: min(75vh, 75vw);
-        height: min(75vh, 75vw);
-        max-width: 450px;
-        max-height: 450px;
-    }
-    
-    /* Central game panel - moderate reduction */
-    #content-layer::before {
-        width: min(55vh, 55vw);
-        height: min(55vh, 55vw);
-        max-width: 350px;
-        max-height: 350px;
-    }
-    
-    /* Text sizes - slight reduction only */
-    #start-screen h1 {
-        font-size: clamp(24px, 5.5vw, 32px);
-        margin: 8px 0;
-    }
-    
-    #start-screen .sub-text,
-    #start-screen .blink {
-        font-size: clamp(14px, 3.5vw, 18px);
-    }
-    
-    /* Frog - slight reduction */
-    .frog-wrapper.large {
-        transform: scale(0.85);
-        margin-bottom: 8px;
-    }
-    
-    .frog-wrapper.small {
-        transform: scale(0.75);
-        margin-bottom: 8px;
-    }
-    
-    /* Challenge text */
-    #challenge-text {
-        font-size: clamp(13px, 3vw, 16px);
-        line-height: 1.4;
-        margin-bottom: 10px;
-    }
-    
-    /* Press counter */
-    button#press-counter {
-        font-size: clamp(14px, 3vw, 16px);
-        padding: 6px 16px;
-    }
-    
-    /* Game over screen */
-    #game-over-screen h1 {
-        font-size: clamp(20px, 5vw, 28px);
-        margin: 8px 0;
-    }
-    
-    #game-over-screen p {
-        font-size: clamp(12px, 3vw, 16px);
-        margin: 6px 0;
-    }
-    
-    /* Restart button */
-    button#restart-btn {
-        padding: 8px 20px;
-        font-size: clamp(11px, 2.5vw, 14px);
-        /* margin-top: 10px; */
-    }
-    
-    /* Share screen - moderate reduction */
-    #share-screen {
-        max-width: min(320px, 85%);
-        padding: 12px;
-    }
-    
-    #screenshot-preview {
-        padding: 20px !important;
-        margin-bottom: 12px !important;
-    }
-    
-    #screenshot-preview h2 {
-        font-size: 22px !important;
-    }
-    
-    #preview-score {
-        font-size: 44px !important;
-    }
-    
-    .score-img {
-        width: 100px !important;
-        height: 100px !important;
-    }
-    
-    #download-btn,
-    #share-twitter,
-    #share-play-again {
-        padding: 10px 16px !important;
-        font-size: 12px !important;
-        margin-bottom: 8px !important;
-        
-    }
-    
-    /* Header - slight reduction */
-    .header {
-        top: 10px;
-        left: 10px;
-        font-size: clamp(11px, 2.5vw, 14px);
-        gap: 4px;
-    }
-    
-    /* Theme button - slight reduction */
-    .theme-btn {
-        top: 10px;
-        right: 10px;
-        width: clamp(35px, 7vw, 42px);
-        height: clamp(35px, 7vw, 42px);
-        font-size: clamp(16px, 3.5vw, 20px);
-    }
-    
-    /* Footer - KEEP AT BOTTOM with proper spacing */
-    #game-footer {
-        bottom: 0;
-        padding: clamp(6px, 1.5vh, 10px);
-    }
-    
-    .footer-ca-link {
-        font-size: clamp(8px, 2vw, 10px);
-        padding: clamp(4px, 1vh, 6px) clamp(10px, 2.5vw, 14px);
-        border-width: 1.5px;
-    }
+    font-size: 12px !important;
 }
 
 /* For very short screens only */
@@ -1156,4 +1027,33 @@ button#restart-btn {
         font-size: 7px;
         padding: 3px 8px;
     }
+}
+
+@media (max-width: 950px) {
+  .over-btn-screen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    width: 100%;
+  }
+
+  #download-btn {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .twitter {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #share-twitter{
+    margin-bottom: 0px;
+  }
+
+  #share-play-again {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
 }
